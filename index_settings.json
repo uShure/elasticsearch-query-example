@@ -1,0 +1,51 @@
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "ru_custom": {
+          "tokenizer": "custom_tokenizer",
+          "filter": [
+            "lowercase",
+            "russian_stop",
+            "russian_stemmer"
+          ]
+        }
+      },
+      "tokenizer": {
+        "custom_tokenizer": {
+          "type": "pattern",
+          "pattern": "[^\\p{L}\\p{Nd}]+"
+        }
+      },
+      "filter": {
+        "russian_stop": {
+          "type": "stop",
+          "stopwords": "_russian_"
+        },
+        "russian_stemmer": {
+          "type": "stemmer",
+          "language": "russian"
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "name": {
+        "type": "text",
+        "fields": {
+          "raw": {
+            "type": "keyword"
+          },
+          "analyzed": {
+            "type": "text",
+            "analyzer": "ru_custom"
+          }
+        }
+      }
+    }
+  }
+}
